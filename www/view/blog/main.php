@@ -8,12 +8,12 @@
 <h1>Статьи</h1>
 
 <?php
-foreach ($this->getData('articles')->getData() as $article){ ?>
+foreach ($this->getData('articles')->getData() as $article): ?>
     <h2><?= $article->title; ?></h2>
     <p>Дата публикации: <?= $article->posttime; ?></p>
     <p><?= $article->text; ?></p>
 
 
-<?php } ?>
+<?php endforeach; ?>
 </body>
 </html>
