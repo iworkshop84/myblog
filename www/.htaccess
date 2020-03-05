@@ -1,0 +1,28 @@
+AddDefaultCharset utf-8
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+
+# редирект домена с www на домен без www
+RewriteCond %{HTTP_HOST} ^www\.(.*)$
+RewriteRule ^(.*)$ http://%1/$1 [L,R=301]
+
+
+# запретить доступ к листингу файлов во всех вложенных директориях
+Options All -Indexes
+# указать индексным файлом в директории index.php
+DirectoryIndex index.php
+
+# не обрабатывать правилами редиректа реально существующие файлы и папки
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+
+
+
+
+# перенаправить все обращения к сайту на файл index.php
+RewriteRule ^(.+)$ index.php [L]
+
+</IfModule>
