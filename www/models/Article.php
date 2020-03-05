@@ -30,4 +30,9 @@ class Article
         return isset($this->data[$name]);
     }
 
+    public function getData()
+    {
+        return $this->data;
+    }
+
 }

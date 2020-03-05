@@ -9,7 +9,7 @@ use App\Classes\BaseException;
 class AbstractModel
 {
     protected static $allowedSort = ['ASC', 'DESC'];
-
+    protected $data = [];
 
 
     protected static function checkAllowed($data, $allowedArr)
@@ -21,7 +21,10 @@ class AbstractModel
         return false;
     }
 
-
+    public function getData()
+    {
+        return $this->data;
+    }
 
 
     public static function simpleGetAll()
