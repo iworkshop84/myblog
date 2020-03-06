@@ -5,7 +5,7 @@
     <title><?= $this->getData('articles')->getData()->title; ?></title>
 </head>
 <body>
-<a href="/index.php" title="Главная">Главная</a>
+<a href="/" title="Главная">Главная</a>
 <h1><?= $this->getData('articles')->getData()->title; ?></h1>
 
 
