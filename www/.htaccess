@@ -19,8 +19,12 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 
+RewriteRule ^([a-zA-Z0-9]+)/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)$ index.php/$1/$2/?value=$3
 
 
+RewriteCond %{REQUEST_URI} /index.php
+RewriteCond %{QUERY_STRING} ^\z
+RewriteRule ^(.*)$ http://myblog.loc/? [R=301,L]
 
 # перенаправить все обращения к сайту на файл index.php
 RewriteRule ^(.+)$ index.php [L]

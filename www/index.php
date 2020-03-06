@@ -16,15 +16,14 @@ $act = !empty($pathParts[2]) ? $pathParts[2] : 'All';
 
 try {
 
-
-
-    $ctrollerClassName = 'App\\Controllers\\' . $ctrl;
+    $ctrollerClassName = 'App\\Controllers\\' . ucfirst($ctrl);
     if(!class_exists($ctrollerClassName)){
         throw new BaseException ('Такой страницы на сайте нет', 2);
     }
 
     $controller = new $ctrollerClassName;
-    $method = 'action' . $act;
+
+    $method = 'action' . ucfirst($act);
     if(!method_exists($controller, $method)){
         throw new BaseException ('Такой страницы на сайте нет', 2);
     }

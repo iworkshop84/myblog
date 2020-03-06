@@ -8,11 +8,12 @@
 <h1>Статьи</h1>
 
 <?php
+
 foreach ($this->getData('articles')->getData() as $article): ?>
-    <h2><?= $article->title; ?></h2>
+
+    <a href="/article/one/<?= $article->id; ?>"><?= $article->title; ?></a>
     <p>Дата публикации: <?= $article->posttime; ?></p>
     <p><?= $article->text; ?></p>
-
 
 <?php endforeach; ?>
 </body>

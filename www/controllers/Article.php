@@ -26,4 +26,16 @@ class Article
         $this->view->assign('articles', $news);
         $this->view->display('blog/main.php');
     }
+
+    public function actionOne()
+    {
+
+        $article = new Articles();
+        $article->getOneByColumn('id', $_GET['value']);
+
+        $this->view->assign('articles', $article);
+        $this->view->display('blog/article.php');
+
+    }
+
 }

@@ -23,5 +23,33 @@ class Articles extends AbstractModel
         return $this;
     }
 
+    public function getOneByColumn($column, $value) :?object
+    {
+        $db = new DBpdo();
+        $db->setClassName(Article::class);
+        $query = 'SELECT * FROM ' . static::$table . ' WHERE '.
+            $column .'=:'. $column;
+        $res = $db->query($query, [':' . $column=>$value]);
+
+        if(empty($res)){
+            return null;
+        }
+        $this->data = $res[0];
+        return $this;
+    }
+
+
+    public function getOneById(int $id) :?object
+    {
+        $db = new DBpdo();
+        $db->setClassName(Article::class);
+        $query = 'SELECT * FROM ' . static::$table . ' WHERE id=:id';
+        $res = $db->query($query, [':id'=>$id]);
+
+        if(empty($res)){
+            return null;
+        }
+        return $res[0];
+    }
 
 }

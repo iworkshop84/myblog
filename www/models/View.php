@@ -10,7 +10,7 @@ class View
     public $message;
 
 
-    public function assign($name, object $value) : object
+    public function assign(string $name, $value) : object
     {
         $this->data[$name] = $value;
         return $this;
@@ -27,7 +27,7 @@ class View
     public function render($template)
     {
         ob_start();
-        include_once __DIR__ . '/../view/'.$template;
+        include_once __DIR__ . '/../view/' . $template;
         $out = ob_get_contents();
         ob_end_clean();
         return $out;
@@ -35,7 +35,7 @@ class View
 
     public function display($template)
     {
-        include_once __DIR__ . '/../view/'.$template;
+        include_once __DIR__ . '/../view/' . $template;
     }
 
 
