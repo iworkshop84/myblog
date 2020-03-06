@@ -7,6 +7,7 @@ namespace App\Models;
 class View
 {
     protected $data = [];
+    public $message;
 
 
     public function assign($name, object $value) : object
@@ -15,15 +16,13 @@ class View
         return $this;
     }
 
-    public function display($template)
-    {
-        include_once __DIR__ . '/../view/'.$template;
-    }
 
     public function getData($name = null)
     {
         return ($this->data[$name] ?? $this->data);
     }
+
+
 
     public function render($template)
     {
@@ -32,6 +31,11 @@ class View
         $out = ob_get_contents();
         ob_end_clean();
         return $out;
+    }
+
+    public function display($template)
+    {
+        include_once __DIR__ . '/../view/'.$template;
     }
 
 

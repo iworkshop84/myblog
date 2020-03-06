@@ -3,6 +3,8 @@
 
 namespace App\Classes;
 
+use \App\Classes\BaseException;
+
 
 include_once __DIR__ . '/../core/dbconfig.php';
 
