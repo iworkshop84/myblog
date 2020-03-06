@@ -5,34 +5,18 @@ ini_set('display_errors', 1);
 require __DIR__ . '/core/autoload.php';
 
 use \App\Classes\BaseException;
+use \App\Classes\Router;
+use \App\Classes\View;
 
-
-$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$pathParts = explode('/', $path);
-
-$ctrl = !empty($pathParts[1]) ? $pathParts[1] : 'Article';
-$act = !empty($pathParts[2]) ? $pathParts[2] : 'All';
 
 
 try {
 
-    $ctrollerClassName = 'App\\Controllers\\' . ucfirst($ctrl);
-    if(!class_exists($ctrollerClassName)){
-        throw new BaseException ('Такой страницы на сайте нет', 2);
-    }
-
-    $controller = new $ctrollerClassName;
-
-    $method = 'action' . ucfirst($act);
-    if(!method_exists($controller, $method)){
-        throw new BaseException ('Такой страницы на сайте нет', 2);
-    }
-
-    $controller->$method();
+     Router::start();
 
 } catch (BaseException $exc) {
 
-    $view = new \App\Models\View();
+    $view = new View();
 
     $view->message = $exc->getMessage();
         switch ($exc->getCode()){

@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Ничего не найдено</h1>
-<?= $this->message; ?>
+<?php echo $this->message; ?>
 
 </body>
 </html>

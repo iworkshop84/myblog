@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\Articles;
-use App\Models\View;
+use App\Classes\View;
 use App\Classes\BaseException;
 
 
