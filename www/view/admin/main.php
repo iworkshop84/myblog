@@ -6,8 +6,11 @@
 </head>
 <body>
 <h1>Админская панель</h1>
-<p><a href="/" title="Главная">Главная - Блог</a> |
-    <a href="/admin/base/" title="Главная">Главная админка</a></p><br>
+<p> <a href="/" title="Главная">Главная - Блог</a> |
+    <a href="/admin/base/" title="Главная">Админка</a> |
+    <a href="/admin/add/" title="Главная">Админка - добавить запись</a>
+
+</p><br>
 
 <?php
 

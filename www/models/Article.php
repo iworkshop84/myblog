@@ -34,5 +34,8 @@ class Article
     {
         return $this->data;
     }
-
+    public function getNamedData($name = null)
+    {
+        return ($this->data[$name] ?? $this->data);
+    }
 }

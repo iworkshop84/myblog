@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use App\Classes\DBpdo;
+use App\Classes\BaseException;
 
 class Articles extends AbstractModel
 {
@@ -50,6 +51,23 @@ class Articles extends AbstractModel
             return null;
         }
         return $res[0];
+    }
+
+    public static function insert(Article $obgArt)
+    {
+        $cols = array_keys($obgArt->getData());
+
+        $dataIns = [];
+        foreach ($cols as $val){
+            $dataIns[':'. $val] = $obgArt->getNamedData($val);
+        }
+
+        $sql = 'INSERT INTO '.static::$table.' ('.
+            implode(', ', $cols) .') VALUES ('. implode(', ', array_keys($dataIns))  .')';
+
+        $db = new DBpdo();
+        $db->exec($sql, $dataIns);
+        return $db->lastInsId();
     }
 
 }
