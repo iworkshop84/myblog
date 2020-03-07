@@ -7,7 +7,7 @@ namespace App\Classes;
 class View
 {
     protected $data = [];
-    public $message;
+    public $errMessage;
 
 
     public function assign(string $name, $value) : object

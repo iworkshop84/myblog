@@ -53,13 +53,13 @@ class Articles extends AbstractModel
         return $res[0];
     }
 
-    public static function insert(Article $obgArt)
+    protected static function insert(Article $obj)
     {
-        $cols = array_keys($obgArt->getData());
+        $cols = array_keys($obj->getData());
 
         $dataIns = [];
         foreach ($cols as $val){
-            $dataIns[':'. $val] = $obgArt->getNamedData($val);
+            $dataIns[':'. $val] = $obj->getNamedData($val);
         }
 
         $sql = 'INSERT INTO '.static::$table.' ('.
@@ -68,6 +68,36 @@ class Articles extends AbstractModel
         $db = new DBpdo();
         $db->exec($sql, $dataIns);
         return $db->lastInsId();
+    }
+
+
+    protected static function update(Article $obj)
+    {
+        $arr = $obj->getData();
+
+        $dataIns =[];
+        $rools =[];
+        foreach ($arr as $key=>$val){
+            $dataIns[':' . $key] = $val;
+            $rools[$key] = $key .' = :' . $key;
+        }
+        $where = array_shift($rools);
+
+        $sql = 'UPDATE '.static::$table. ' SET '. implode(', ', ($rools)) .'
+            WHERE ('. $where .')';
+        $db = new DBpdo();
+        $db->exec($sql, $dataIns);
+        return $db->lastInsId();
+    }
+
+
+    public static function save(Article $obj)
+    {
+        if(isset($obj->id)){
+            return self::update($obj);
+        }else{
+            return self::insert($obj);
+        }
     }
 
 }

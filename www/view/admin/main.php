@@ -16,7 +16,7 @@
 
 foreach ($this->getData('articles')->getData() as $article): ?>
 
-    <p>Дата: <?= $article->posttime; ?> | <a href="/article/one/<?= $article->id; ?>"><?= $article->title; ?></a></p>
+    <p>Дата: <?= $article->posttime; ?> | <a href="/admin/edit/<?= $article->id; ?>"><?= $article->title; ?></a></p>
 
 
 <?php endforeach; ?>

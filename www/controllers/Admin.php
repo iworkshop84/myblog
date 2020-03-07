@@ -42,12 +42,35 @@ class Admin
                 $article->title = $_POST['title'];
                 $article->text = $_POST['text'];
 
-                $id = Articles::insert($article);
-                var_dump($id);
-
-
+                $id = Articles::save($article);
+                header('Location: /admin/edit/' . $id);
             }
         }
+
         $this->view->display('admin/add.php');
+    }
+
+    public function actionEdit()
+    {
+
+        if(!empty($_POST)){
+            if('' !== $_POST['title']){
+
+                $article = new Article();
+                $article->id = $_GET['value'];
+                $article->title = $_POST['title'];
+                $article->text = $_POST['text'];
+
+                $id = Articles::save($article);
+                header('Location: /admin/edit/' . $article->id);
+            }
+        }
+
+        $article = new Articles();
+        $article->getOneByColumn('id', $_GET['value']);
+
+        $this->view->assign('article', $article);
+        $this->view->display('admin/edit.php');
+
     }
 }

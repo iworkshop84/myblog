@@ -18,7 +18,7 @@ try {
 
     $view = new View();
 
-    $view->message = $exc->getMessage();
+    $view->errMessage = $exc->getMessage();
         switch ($exc->getCode()){
             case 1:
                 header('HTTP/1.1 403 Not Found');
