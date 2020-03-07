@@ -69,6 +69,10 @@ class Admin
         $article = new Articles();
         $article->getOneByColumn('id', $_GET['value']);
 
+            if(empty($article->getData())){
+                throw new BaseException('Указанной статьи на сайте нет', 2);
+            }
+
         $this->view->assign('article', $article);
         $this->view->display('admin/edit.php');
 

@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Ничего не найдено</h1>
-<?php echo $this->message; ?>
+<?php echo $this->errMessage; ?>
 
 </body>
 </html>
