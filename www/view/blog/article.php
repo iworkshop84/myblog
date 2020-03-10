@@ -5,8 +5,11 @@
     <title><?= $this->getData('articles')->getData()->title; ?></title>
 </head>
 <body>
-<a href="/" title="Главная">Главная</a>
-<h1><?= $this->getData('articles')->getData()->title; ?></h1>
+<p><a href="/" title="Главная">Главная</a> |
+    <a href="/admin/base/" title="Главная">Главная админка</a> |
+    <a href="/admin/login/" title="Авторизация">Авторизация</a> |
+    <a href="/admin/register/" title="Регистрация">Регистрация</a>
+</p><br>
 
 
 <p>Дата публикации: <?= $this->getData('articles')->getData()->posttime; ?></p>

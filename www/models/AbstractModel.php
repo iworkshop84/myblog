@@ -6,7 +6,7 @@ use App\Classes\DBpdo;
 use App\Classes\BaseException;
 
 
-class AbstractModel
+abstract class AbstractModel
 {
     protected static $allowedSort = ['ASC', 'DESC'];
     protected $data = [];

@@ -8,7 +8,9 @@ use App\Classes\BaseException;
 use App\Classes\View;
 use App\Models\Articles;
 use App\Models\Article;
-use http\Env\Request;
+//use http\Env\Request;
+use App\Models\Users;
+use App\Models\User;
 
 class Admin
 {
@@ -75,6 +77,35 @@ class Admin
 
         $this->view->assign('article', $article);
         $this->view->display('admin/edit.php');
+
+    }
+
+
+    public function actionLogin()
+    {
+        if(!empty($_POST)){
+            if(('' !== $_POST['login']) && ('' !== $_POST['password'])) {
+
+                $user = new Users();
+                $res = $user->getOneByColumn('login', $_POST['login']);
+                if (null == $res) {
+                    $this->view->assign('error', 'Нет такого пользователя');
+                } else {
+                       if ($user->vertify($_POST['password'], $res)) {
+                           $res->getData()->hashtoken = Users::genHashToken();
+                           $res->getData()->logtime = date('Y-m-d G-i-s',time());
+
+                           Users::update($user);
+
+
+                        } else {
+                            $this->view->assign('error', 'Не правльный логин или пароль');
+                        }
+                }
+            }
+        }
+
+        $this->view->display('admin/login.php');
 
     }
 }

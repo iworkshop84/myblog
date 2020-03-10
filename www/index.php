@@ -7,11 +7,17 @@ require __DIR__ . '/core/autoload.php';
 use \App\Classes\BaseException;
 use \App\Classes\Router;
 use \App\Classes\View;
+use \App\Classes\Auth;
+
+
+
+
+
 
 
 
 try {
-
+     Auth::start();
      Router::start();
 
 } catch (BaseException $exc) {

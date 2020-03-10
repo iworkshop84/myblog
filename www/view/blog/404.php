@@ -5,6 +5,7 @@
     <title>Ничего не найдено</title>
 </head>
 <body>
+
 <h1>Ничего не найдено</h1>
 <?php echo $this->errMessage; ?>
 
