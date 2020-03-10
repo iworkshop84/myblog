@@ -8,7 +8,6 @@ use App\Classes\BaseException;
 use App\Classes\View;
 use App\Models\Articles;
 use App\Models\Article;
-//use http\Env\Request;
 use App\Models\Users;
 use App\Models\User;
 
@@ -46,6 +45,7 @@ class Admin
 
                 $id = Articles::save($article);
                 header('Location: /admin/edit/' . $id);
+                exit;
             }
         }
 
@@ -65,6 +65,7 @@ class Admin
 
                 $id = Articles::save($article);
                 header('Location: /admin/edit/' . $article->id);
+                exit;
             }
         }
 
@@ -92,12 +93,23 @@ class Admin
                     $this->view->assign('error', 'Нет такого пользователя');
                 } else {
                        if ($user->vertify($_POST['password'], $res)) {
-                           $res->getData()->hashtoken = Users::genHashToken();
-                           $res->getData()->logtime = date('Y-m-d G-i-s',time());
 
-                           Users::update($user);
+//                            var_dump(password_hash($res->getData()->login, PASSWORD_DEFAULT));
+                            $token = Users::genHashToken();
+                            $logHash = password_hash($res->getData()->login, PASSWORD_DEFAULT);
 
+                            $res->getData()->hashtoken = $token . $logHash;
+//                            var_dump( $res->getData()->hashtoken);
+                            $res->getData()->logtime = date('Y-m-d G-i-s',time());
 
+                            Users::update($user);
+                            $_SESSION['login'] =$res->getData()->login;
+                            $_SESSION['id'] = $res->getData()->id;
+                            $_SESSION['rools'] = $res->getData()->userrools;
+                            $_SESSION['hash'] = $token;
+
+                            header('Location: /');
+                            exit;
                         } else {
                             $this->view->assign('error', 'Не правльный логин или пароль');
                         }

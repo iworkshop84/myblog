@@ -9,15 +9,18 @@ use \App\Classes\Router;
 use \App\Classes\View;
 use \App\Classes\Auth;
 
-
-
-
-
-
-
-
 try {
-     Auth::start();
+    Auth::start();
+
+
+var_dump($_SESSION);
+//var_dump(Auth::logged());
+//var_dump(Auth::checkVert());
+
+
+
+
+
      Router::start();
 
 } catch (BaseException $exc) {

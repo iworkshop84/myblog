@@ -20,7 +20,7 @@ class Users extends AbstractModel
 
     public static function genHashToken() : string
     {
-        return bin2hex(openssl_random_pseudo_bytes(64));
+        return bin2hex(openssl_random_pseudo_bytes(32));
     }
 
 
@@ -42,7 +42,7 @@ class Users extends AbstractModel
     public static function update(Users $obj)
     {
         $arr = $obj->getData()->getData();
-//var_dump($arr);
+
         $dataIns =[];
         $rools =[];
         foreach ($arr as $key=>$val){
@@ -53,8 +53,7 @@ class Users extends AbstractModel
 
         $sql = 'UPDATE '.static::$table. ' SET '. implode(', ', ($rools)) .'
             WHERE ('. $where .')';
-//        var_dump($sql);
-//        var_dump($dataIns);
+
         $db = new DBpdo();
         $db->exec($sql, $dataIns);
         return $db->lastInsId();
