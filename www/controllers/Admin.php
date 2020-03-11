@@ -116,8 +116,23 @@ class Admin
                 }
             }
         }
-
         $this->view->display('admin/login.php');
-
     }
+
+    public function actionRegister()
+    {
+
+        if(!empty($_POST)){
+           var_dump($_POST);
+           if(!empty($_POST['login']) && !empty($_POST['password']) && !empty($_POST['passwordConf']) && !empty($_POST['email'])){
+               echo 1111;
+           }else{
+               $this->view->assign('error', 'Заполните все необходимые поля');
+           }
+        }
+        $this->view->display('admin/register.php');
+    }
+
+
+
 }

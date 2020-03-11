@@ -8,8 +8,9 @@
 <h1>Админская панель</h1>
 <p> <a href="/" title="Главная">Главная - Блог</a> |
     <a href="/admin/base/" title="Главная">Админка</a> |
-    <a href="/admin/add/" title="Главная">Админка - добавить запись</a>
-
+    <a href="/admin/add/" title="Главная">Админка - добавить запись</a> |
+    <a href="/admin/login/" title="Регистрация">Авторизация</a> |
+    <a href="/admin/register/" title="Регистрация">Регистрация</a>
 </p><br>
 
 <?php

@@ -6,8 +6,12 @@
 </head>
 <body>
 <h1>Админка - Авторизация</h1>
-<p><a href="/" title="Главная">Главная - Блог</a> |
-    <a href="/admin/login/" title="Главная">Главная админка</a></p><br>
+<p> <a href="/" title="Главная">Главная - Блог</a> |
+    <a href="/admin/base/" title="Главная">Админка</a> |
+    <a href="/admin/add/" title="Главная">Админка - добавить запись</a> |
+    <a href="/admin/login/" title="Регистрация">Авторизация</a> |
+    <a href="/admin/register/" title="Регистрация">Регистрация</a>
+</p><br>
 
 <form action="/admin/login" title="add" name="test" method="post">
     <p><input name="login" type="text" placeholder="Ваш логин"></p>
