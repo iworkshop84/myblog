@@ -19,7 +19,7 @@
     <p><input name="password" type="password" placeholder="Ваш пароль"></p>
     <p><input name="passwordConf" type="password" placeholder="Повторите ваш пароль"></p>
 
-    <button type="submit">Войти</button>
+    <button type="submit">Регистрация</button>
 </form>
 
 <?php

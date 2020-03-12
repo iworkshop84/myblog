@@ -7,6 +7,7 @@ namespace App\Models;
  * @property string     $login
  * @property string     $password
  * @property integer    $userrools
+ * @property string     $email
  * @property integer    $regtime
  * @property integer    $logtime
  */

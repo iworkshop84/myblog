@@ -59,4 +59,20 @@ class Users extends AbstractModel
         return $db->lastInsId();
     }
 
+    public static function insert(User $obj)
+    {
+        $cols = array_keys($obj->getData());
+        $dataIns = [];
+        foreach ($cols as $val){
+            $dataIns[':'. $val] = $obj->getData()[$val];
+        }
+
+        $sql = 'INSERT INTO '.static::$table.' ('.
+            implode(', ', $cols) .') VALUES ('. implode(', ', array_keys($dataIns))  .')';
+
+        $db = new DBpdo();
+        $db->exec($sql, $dataIns);
+        return $db->lastInsId();
+    }
+
 }

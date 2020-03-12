@@ -123,9 +123,47 @@ class Admin
     {
 
         if(!empty($_POST)){
-           var_dump($_POST);
            if(!empty($_POST['login']) && !empty($_POST['password']) && !empty($_POST['passwordConf']) && !empty($_POST['email'])){
-               echo 1111;
+
+              if($_POST['passwordConf'] == $_POST['password']){
+
+                  if(0 != preg_match('~^[0-9A-Za-z!\\~?@/\\\\#.,$%+-]{4,80}$~', $_POST['login'])){
+
+                        if(0 != preg_match('~^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z!\\~?@/\\\\#.,$%]{6,80}$~', $_POST['password'])){
+
+                            if((null == (new Users())->getOneByColumn('email', $_POST['email'])) && (null == (new Users())->getOneByColumn('login', $_POST['login']))){
+//                                var_dump($_POST);
+
+                                $newUser = new User();
+                                $newUser->login = $_POST['login'];
+                                $newUser->email = $_POST['email'];
+                                $newUser->password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                                $newUser->userrools = 4;
+                                $newUser->regtime = date('Y-m-d G:i:s', time());
+//
+                                $res = Users::insert($newUser);
+                                if($res){
+                                    header('Location: /admin/login');
+                                }else{
+                                    $this->view->assign('error','Что то пошло не так, обратитесь к администратору');
+                                }
+
+                            }else{
+                                $this->view->assign('error',
+                                    'Указанный логин или email занят. Если вы забыли пароль вы можете его восстановить');
+                            }
+                        }else{
+                            $this->view->assign('error',
+                                'Пароль должен быть длинее 6 символов, содержать минимум одну цифру,  по одной букве в верхнем и в нижнем латинском регистре, 
+                                        и не содержать ничего кроме латинских букв, цифр и символов ~!?@$%/\#.,+-');
+                        }
+                  }else{
+                      $this->view->assign('error',
+                          'Логин должен быть длинее 4 символов и не содержать ничего кроме латинских букв, цифр и символов ~!?@$%/\#.,+-');
+                  }
+              }else{
+                  $this->view->assign('error', 'Пароли не совпадают');
+              }
            }else{
                $this->view->assign('error', 'Заполните все необходимые поля');
            }
