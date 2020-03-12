@@ -15,7 +15,7 @@ class Router
         $routes = explode('/', $path);
 
         $ctrl = !empty($routes[1]) ? $routes[1] : 'Article';
-        $act = !empty($routes[2]) ? $routes[2] : 'All';
+        $act = !empty($routes[2]) ? $routes[2] : 'Main';
 
         $ctrollerClassName = 'App\\Controllers\\' . ucfirst($ctrl);
         if(!class_exists($ctrollerClassName)){

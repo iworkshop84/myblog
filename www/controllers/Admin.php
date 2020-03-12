@@ -4,6 +4,7 @@
 namespace App\Controllers;
 
 
+use App\Classes\Auth;
 use App\Classes\BaseException;
 use App\Classes\View;
 use App\Models\Articles;
@@ -21,8 +22,12 @@ class Admin
         $this->view = new View();
     }
 
-    public function actionBase()
+    public function actionMain()
     {
+        if(!Auth::logged()){
+            throw new BaseException('Ничего не найдено',2);
+        }
+
         $news = new Articles();
         $news->ordGetAll('posttime','DESC');
         if(empty($news)){
@@ -35,6 +40,9 @@ class Admin
 
     public function actionAdd()
     {
+        if(!Auth::logged()){
+            throw new BaseException('Ничего не найдено',2);
+        }
 
         if(!empty($_POST)){
             if('' !== $_POST['title']){
@@ -54,6 +62,9 @@ class Admin
 
     public function actionEdit()
     {
+        if(!Auth::logged()){
+            throw new BaseException('Ничего не найдено',2);
+        }
 
         if(!empty($_POST)){
             if('' !== $_POST['title']){
@@ -70,12 +81,15 @@ class Admin
         }
 
         $article = new Articles();
+        if(isset($_GET['value'])){
         $article->getOneByColumn('id', $_GET['value']);
 
             if(empty($article->getData())){
                 throw new BaseException('Указанной статьи на сайте нет', 2);
             }
-
+        }else{
+                throw new BaseException('Указанной статьи на сайте нет', 2);
+        }
         $this->view->assign('article', $article);
         $this->view->display('admin/edit.php');
 
@@ -103,8 +117,8 @@ class Admin
                             $res->getData()->logtime = date('Y-m-d G-i-s',time());
 
                             Users::update($user);
-                            $_SESSION['login'] =$res->getData()->login;
                             $_SESSION['id'] = $res->getData()->id;
+                            $_SESSION['login'] =$res->getData()->login;
                             $_SESSION['rools'] = $res->getData()->userrools;
                             $_SESSION['hash'] = $token;
 
@@ -144,10 +158,10 @@ class Admin
                                 $res = Users::insert($newUser);
                                 if($res){
                                     header('Location: /admin/login');
+                                    exit;
                                 }else{
                                     $this->view->assign('error','Что то пошло не так, обратитесь к администратору');
                                 }
-
                             }else{
                                 $this->view->assign('error',
                                     'Указанный логин или email занят. Если вы забыли пароль вы можете его восстановить');
@@ -171,6 +185,10 @@ class Admin
         $this->view->display('admin/register.php');
     }
 
-
+    public function actionLogout()
+    {
+        Auth::logout();
+        exit;
+    }
 
 }

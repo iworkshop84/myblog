@@ -15,7 +15,7 @@ class Article
         $this->view = new View();
     }
 
-    public function actionAll()
+    public function actionMain()
     {
         $news = new Articles();
         $news->ordGetAll('posttime','DESC');

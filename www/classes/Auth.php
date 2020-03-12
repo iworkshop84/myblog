@@ -15,11 +15,15 @@ class Auth
 
     public static function logged()
     {
-        return !empty($_SESSION);
+        return isset($_SESSION['id']);
     }
 
     public static function logout()
     {
+        unset($_SESSION['id']);
+        unset($_SESSION['login']);
+        unset($_SESSION['rools']);
+        unset($_SESSION['hash']);
         session_destroy();
         header('Location: /');
         exit;

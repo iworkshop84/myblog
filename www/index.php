@@ -17,7 +17,7 @@ try {
 
 
     Router::start();
-
+    var_dump($_SESSION);
 
 
 
