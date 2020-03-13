@@ -13,9 +13,18 @@ class Auth
         session_start();
     }
 
-    public static function logged()
+    public static function sesLogged()
     {
-        return isset($_SESSION['id']);
+       return isset($_SESSION['id']);
+    }
+
+    public static function cookieExist()
+    {
+        if(isset($_COOKIE['remember']) && isset($_COOKIE['vf'])){
+           return true;
+        }else{
+            return false;
+        }
     }
 
     public static function logout()
@@ -25,13 +34,34 @@ class Auth
         unset($_SESSION['rools']);
         unset($_SESSION['hash']);
         session_destroy();
+        setcookie('remember', '', time() - 86400 , '/');
+        setcookie('vf', '', time() - 86400 , '/');
         header('Location: /');
         exit;
     }
 
     public static function authentication()
     {
-        if(self::logged()){
+        if(self::cookieExist()){
+            $hashToken = substr($_COOKIE['remember'], 0, 64);
+            $id =substr($_COOKIE['remember'], 68);
+            $logHash =$_COOKIE['vf'];
+
+            $cookieuser = new Users();
+            $cookieuser->getOneByColumn('id', $id);
+
+            if( (substr($cookieuser->getData()->hashtoken, 0, 64) == $hashToken)
+                    && (password_verify( $cookieuser->getData()->login, $logHash))){
+                $_SESSION['id'] = $id;
+                $_SESSION['login'] = $cookieuser->getData()->login;
+                $_SESSION['rools'] = $cookieuser->getData()->userrools;
+                $_SESSION['hash'] = $hashToken;
+            }
+
+
+        }
+
+        if(self::sesLogged()){
             if(isset($_SESSION['login'], $_SESSION['id'], $_SESSION['rools'], $_SESSION['hash'])){
 
                 $user = new Users();
@@ -54,9 +84,6 @@ class Auth
                 if($_SESSION['rools'] != $user->getData()->userrools){
                     self::logout();
                 }
-
-
-
             }else{
                self::logout();
                header('Location: /');

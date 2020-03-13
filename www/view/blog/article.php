@@ -5,7 +5,7 @@
     <title><?= $this->getData('articles')->getData()->title; ?></title>
 </head>
 <body>
-<p><a href="/" title="Главная">Главная</a> |
+
 <p><a href="/" title="Главная">Главная</a> |
     <?php if(isset($_SESSION['id'])){ ?>
         <a href="/admin/main/" title="Главная">Админка</a> |
@@ -15,10 +15,10 @@
         <a href="/admin/login/" title="Авторизация">Авторизация</a> |
         <a href="/admin/register/" title="Регистрация">Регистрация</a>
     <?php } ?>
-</p><br>
+</p>
 
 
-</p><br>
+
 
 <h1><?= $this->getData('articles')->getData()->title; ?></h1>
 

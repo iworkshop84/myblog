@@ -20,6 +20,7 @@
 <form action="/admin/login" title="add" name="test" method="post">
     <p><input name="login" type="text" placeholder="Ваш логин"></p>
     <p><input name="password" type="password" placeholder="Ваш пароль"></p>
+    <p>Запомнить меня: <input type="checkbox" name="remember"></p>
 
     <button type="submit">Войти</button>
 </form>

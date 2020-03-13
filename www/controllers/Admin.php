@@ -24,7 +24,7 @@ class Admin
 
     public function actionMain()
     {
-        if(!Auth::logged()){
+        if(!Auth::sesLogged()){
             throw new BaseException('Ничего не найдено',2);
         }
 
@@ -40,7 +40,7 @@ class Admin
 
     public function actionAdd()
     {
-        if(!Auth::logged()){
+        if(!Auth::sesLogged()){
             throw new BaseException('Ничего не найдено',2);
         }
 
@@ -62,7 +62,7 @@ class Admin
 
     public function actionEdit()
     {
-        if(!Auth::logged()){
+        if(!Auth::sesLogged()){
             throw new BaseException('Ничего не найдено',2);
         }
 
@@ -108,12 +108,11 @@ class Admin
                 } else {
                        if ($user->vertify($_POST['password'], $res)) {
 
-//                            var_dump(password_hash($res->getData()->login, PASSWORD_DEFAULT));
                             $token = Users::genHashToken();
                             $logHash = password_hash($res->getData()->login, PASSWORD_DEFAULT);
+//                            $idHash = password_hash($res->getData()->id, PASSWORD_DEFAULT);
 
                             $res->getData()->hashtoken = $token . $logHash;
-//                            var_dump( $res->getData()->hashtoken);
                             $res->getData()->logtime = date('Y-m-d G-i-s',time());
 
                             Users::update($user);
@@ -122,7 +121,14 @@ class Admin
                             $_SESSION['rools'] = $res->getData()->userrools;
                             $_SESSION['hash'] = $token;
 
-                            header('Location: /');
+                            //В куку пишется контакенация токена(который отправляется в Сессю) и хешированного ID пользователя
+                            // В БД у нас отправляется контакенация токена и хешированного логина
+                            if(isset($_POST['remember'])){
+                                setcookie('remember', $token . '$2y$' . $res->getData()->id, time() + 86400 * 30, '/');
+                                setcookie('vf', $logHash, time() + 86400 * 30, '/');
+                            }
+
+                            header('Location: /admin/main');
                             exit;
                         } else {
                             $this->view->assign('error', 'Не правльный логин или пароль');
