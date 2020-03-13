@@ -209,4 +209,12 @@ class Admin
         exit;
     }
 
+    public function actionManageUsers()
+    {
+
+
+//        $this->view->assign('article', $article);
+        $this->view->display('admin/edit.php');
+    }
+
 }
