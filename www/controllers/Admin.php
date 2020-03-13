@@ -66,6 +66,18 @@ class Admin
             throw new BaseException('Ничего не найдено',2);
         }
 
+        if(isset($_POST['delete'])){
+            $article = new Article();
+            $article->id = $_GET['value'];
+//            var_dump($article);
+
+            Articles::delete($article);
+            header('Location: /admin/main');
+            exit;
+
+        }
+
+
         if(!empty($_POST)){
             if('' !== $_POST['title']){
 

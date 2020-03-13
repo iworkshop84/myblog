@@ -44,4 +44,6 @@ abstract class AbstractModel
         $res = $db->query($sql);
         return $res;
     }
+
+
 }

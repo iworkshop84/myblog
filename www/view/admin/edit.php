@@ -22,6 +22,7 @@
     <p><input name="title" placeholder="Название статьи" value="<?php echo $this->getData('article')->getData()->title; ?>"></p>
     <p><textarea name="text" rows="5" cols="50" placeholder="Текст статьи"><?php echo $this->getData('article')->getData()->text; ?></textarea></p>
     <button type="submit">Опубликовать</button>
+    <button type="submit" name="delete">Удалить запись</button>
 </form>
 
 

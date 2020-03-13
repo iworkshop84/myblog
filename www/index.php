@@ -15,21 +15,8 @@ try {
     Auth::start();
     Auth::authentication();
 
-
     Router::start();
-    var_dump($_SESSION);
-    var_dump($_COOKIE);
 
-
-
-
-//$test = 'sn23!!/\01~,n#A';
-//
-//
-//$regexp = '~^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z!\\~?@/\\\\#.,$%]{6,80}$~';
-//
-//var_dump(preg_match($regexp, $test, $res));
-//var_dump($res);
 
 } catch (BaseException $exc) {
 

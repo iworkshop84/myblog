@@ -100,4 +100,20 @@ class Articles extends AbstractModel
         }
     }
 
+    public static function delete(Article $obj)
+    {
+
+        $dataIns =[];
+        $rools =[];
+        foreach ($obj->getData() as $key=>$val){
+            $dataIns[':' . $key] = $val;
+            $rools[$key] = $key .' = :' . $key;
+        }
+
+        $sql ='DELETE FROM ' . static::$table . ' WHERE '.
+            implode(', ', ($rools));
+        $db = new DBpdo();
+        return $db->exec($sql, $dataIns);
+    }
+
 }

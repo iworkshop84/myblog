@@ -57,8 +57,6 @@ class Auth
                 $_SESSION['rools'] = $cookieuser->getData()->userrools;
                 $_SESSION['hash'] = $hashToken;
             }
-
-
         }
 
         if(self::sesLogged()){
@@ -66,10 +64,9 @@ class Auth
 
                 $user = new Users();
                 $user->getOneByColumn('id', $_SESSION['id']);
-//                var_dump($user->getData()->hashtoken);
+
                 $hashToken = substr($user->getData()->hashtoken, 0, 64);
                 $logHash =substr($user->getData()->hashtoken, 64);
-
 
                 if($hashToken != $_SESSION['hash']){
                     self::logout();
@@ -80,7 +77,6 @@ class Auth
                 if(!password_verify($_SESSION['login'], $logHash)){
                     self::logout();
                 }
-                //var_dump($user->getData());
                 if($_SESSION['rools'] != $user->getData()->userrools){
                     self::logout();
                 }
@@ -89,7 +85,6 @@ class Auth
                header('Location: /');
                exit;
             }
-
         }
     }
 }
