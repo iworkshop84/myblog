@@ -39,6 +39,17 @@ class Users extends AbstractModel
         return $this;
     }
 
+    public function ordGetAll(string $column = 'id', string $order = 'ASC')
+    {
+        $db = new DBpdo();
+        $db->setClassName(User::class);
+        $sql = 'SELECT * FROM '. static::$table .' ORDER BY '. $column .' '.
+            static::checkAllowed($order, static::$allowedSort);
+        $res = $db->query($sql);
+        $this->data = $res;
+        return $this;
+    }
+
     public static function update(Users $obj)
     {
         $arr = $obj->getData()->getData();
@@ -74,5 +85,6 @@ class Users extends AbstractModel
         $db->exec($sql, $dataIns);
         return $db->lastInsId();
     }
+
 
 }

@@ -209,12 +209,15 @@ class Admin
         exit;
     }
 
-    public function actionManageUsers()
+    public function actionUsers()
     {
+        $users =  new Users();
+        $ulist = $users->ordGetAll();
 
+//        var_dump($ulist);
 
-//        $this->view->assign('article', $article);
-        $this->view->display('admin/edit.php');
+        $this->view->assign('users', $ulist);
+        $this->view->display('admin/users.php');
     }
 
 }
