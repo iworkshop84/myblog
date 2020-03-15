@@ -10,8 +10,11 @@ class Auth
 {
     public static function start()
     {
-        session_start();
+        if (isset($_COOKIE[session_name()]) || (isset($_COOKIE['remember']))) {
+            session_start();
+        }
     }
+
 
     public static function sesLogged()
     {
@@ -33,8 +36,12 @@ class Auth
         unset($_SESSION['login']);
         unset($_SESSION['rools']);
         unset($_SESSION['hash']);
+        unset($_COOKIE['remember']);
+        unset($_COOKIE['vf']);
+
         session_destroy();
         setcookie('remember', '', time() - 86400 , '/');
+        setcookie('PHPSESSID', '', time() - 86400 , '/');
         setcookie('vf', '', time() - 86400 , '/');
         header('Location: /');
         exit;
@@ -52,6 +59,7 @@ class Auth
 
             if( (substr($cookieuser->getData()->hashtoken, 0, 64) == $hashToken)
                     && (password_verify( $cookieuser->getData()->login, $logHash))){
+
                 $_SESSION['id'] = $id;
                 $_SESSION['login'] = $cookieuser->getData()->login;
                 $_SESSION['rools'] = $cookieuser->getData()->userrools;
@@ -87,4 +95,8 @@ class Auth
             }
         }
     }
+
+
+
+
 }

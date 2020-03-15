@@ -26,7 +26,7 @@ foreach ($this->getData('users')->getData() as $user): ?>
     Логин пользователя: <?= $user->login; ?> |
     Дата регистрации: <?= $user->regtime; ?> |
     Email пользователя: <?= $user->email; ?> |
-    Уровень доступа: <?= $user->userrools; ?></p>
+    Уровень доступа: <?= $user->roolsname; ?></p>
 <hr>
 
 <?php endforeach; ?>

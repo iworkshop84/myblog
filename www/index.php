@@ -10,9 +10,11 @@ use \App\Classes\View;
 use \App\Classes\Auth;
 
 
+
 try {
 
     Auth::start();
+
     Auth::authentication();
 
     Router::start();
@@ -21,7 +23,6 @@ try {
 } catch (BaseException $exc) {
 
     $view = new View();
-
     $view->errMessage = $exc->getMessage();
         switch ($exc->getCode()){
             case 1:
@@ -34,4 +35,4 @@ try {
                 break;
         }
     $view->display('/blog/404.php');
-    }
+}

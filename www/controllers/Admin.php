@@ -128,6 +128,7 @@ class Admin
                             $res->getData()->logtime = date('Y-m-d G-i-s',time());
 
                             Users::update($user);
+                            session_start();
                             $_SESSION['id'] = $res->getData()->id;
                             $_SESSION['login'] =$res->getData()->login;
                             $_SESSION['rools'] = $res->getData()->userrools;
@@ -140,7 +141,7 @@ class Admin
                                 setcookie('vf', $logHash, time() + 86400 * 30, '/');
                             }
 
-                            header('Location: /admin/main');
+                            header('Location: http://'.$_SERVER['HTTP_HOST'].'/admin/main');
                             exit;
                         } else {
                             $this->view->assign('error', 'Не правльный логин или пароль');
@@ -212,9 +213,9 @@ class Admin
     public function actionUsers()
     {
         $users =  new Users();
-        $ulist = $users->ordGetAll();
+        $ulist = $users->ordGetAllUsers('userrools.roolsname');
 
-//        var_dump($ulist);
+        var_dump($ulist);
 
         $this->view->assign('users', $ulist);
         $this->view->display('admin/users.php');

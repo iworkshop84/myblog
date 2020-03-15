@@ -39,11 +39,11 @@ class Users extends AbstractModel
         return $this;
     }
 
-    public function ordGetAll(string $column = 'id', string $order = 'ASC')
+    public function ordGetAllUsers(string $column = 'id', string $order = 'ASC')
     {
         $db = new DBpdo();
         $db->setClassName(User::class);
-        $sql = 'SELECT * FROM '. static::$table .' ORDER BY '. $column .' '.
+        $sql = 'SELECT * FROM users, userrools WHERE users.userrools = userrools.id ORDER BY '. $column .' '.
             static::checkAllowed($order, static::$allowedSort);
         $res = $db->query($sql);
         $this->data = $res;
