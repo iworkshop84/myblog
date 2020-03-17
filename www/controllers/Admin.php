@@ -215,7 +215,7 @@ class Admin
         $users =  new Users();
         $ulist = $users->ordGetAllUsers('userrools.id');
 
-       //var_dump($ulist);
+
 
         $this->view->assign('users', $ulist);
         $this->view->display('admin/users.php');
@@ -224,7 +224,37 @@ class Admin
     public function actionUser()
     {
         if(!empty($_POST)){
-            var_dump($_POST);
+            if(!empty($_POST['email']) && !empty($_POST['userrools'])){
+
+                $users =  new Users();
+                $user = $users->getOneByColumn('email', $_POST['email']);
+
+                    if((null == $user) || ($_GET['value'] == $user->getData()->id)){
+
+                        $newUser = new User();
+                        $newUser->id = $_GET['value'];
+                        $newUser->email = $_POST['email'];
+                        $newUser->userrools = $_POST['userrools'];
+
+                        if(('' !== $_POST['password'][0]) || ('' !== $_POST['password'][1])){
+                            if($_POST['password'][0] == $_POST['password'][1]){
+                                $newUser->password = password_hash($_POST['password'][0], PASSWORD_DEFAULT);
+                            }else{
+                                $this->view->assign('error', 'Пароли не совпадают');
+                            }
+                        }
+
+                        if(empty($this->view->getData('error'))){
+
+                            Users::updateUsers($newUser);
+                        }
+
+                    }else{
+                        $this->view->assign('error', 'Указанная почта уже используется');
+                    }
+            }else{
+                $this->view->assign('error', 'Почта не может быть пустой');
+            }
         }
 
         $users =  new Users();

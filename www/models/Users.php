@@ -88,6 +88,27 @@ class Users extends AbstractModel
         return $db->lastInsId();
     }
 
+    public static function updateUsers(User $obj)
+    {
+        $arr = $obj->getData();
+
+        $dataIns =[];
+        $rools =[];
+        foreach ($arr as $key=>$val){
+            $dataIns[':' . $key] = $val;
+            $rools[$key] = $key .' = :' . $key;
+        }
+        $where = array_shift($rools);
+
+        $sql = 'UPDATE '.static::$table. ' SET '. implode(', ', ($rools)) .'
+            WHERE ('. $where .')';
+
+        $db = new DBpdo();
+        $db->exec($sql, $dataIns);
+        return $db->lastInsId();
+    }
+
+
     public static function insert(User $obj)
     {
         $cols = array_keys($obj->getData());

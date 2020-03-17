@@ -21,19 +21,11 @@
 
 
 
-
-
-<?php
-//var_dump($this->getData('user')->getData());
-//var_dump($this->getData('userrools'));
-?>
-
 <form action="/admin/user/<?php echo $this->getData('user')->getData()->id; ?>" title="add" name="useredit" method="post">
     <p>Дата регистрации: <?php echo $this->getData('user')->getData()->regtime; ?></p>
-    <p>Логин: <input name="login" placeholder="Логин пользователя" value="<?php echo $this->getData('user')->getData()->login; ?>" readonly></p>
+    <p>Логин: <input name="login" placeholder="Логин пользователя" value="<?php echo $this->getData('user')->getData()->login; ?>" readonly disabled></p>
     <p>Email: <input name="email" placeholder="Email пользователя" value="<?php echo $this->getData('user')->getData()->email; ?>"></p>
     <p>Уровень доступа:
-
         <select name="userrools">
             <?php  foreach ($this->getData('userrools') as $key=>$val) { ?>
 
@@ -42,14 +34,14 @@
 
             <?php }?>
         </select>
-
+    <p>Новый пароль: <input name="password[]" placeholder="Пароль пользователя"></p>
+    <p>Новый пароль: <input name="password[]" placeholder="Подтверждение пароля пользователя"></p>
     </p>
-
-
-
     <button type="submit">Отправить</button>
-
 </form>
 
+<?php
+echo ($this->getData()['error']??'');
+?>
 </body>
 </html>
