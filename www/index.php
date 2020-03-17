@@ -9,6 +9,7 @@ use \App\Classes\Router;
 use \App\Classes\View;
 use \App\Classes\Auth;
 
+//var_dump(session_status() === PHP_SESSION_DISABLED);
 
 
 try {

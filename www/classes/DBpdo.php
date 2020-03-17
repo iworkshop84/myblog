@@ -44,6 +44,18 @@ class DBpdo
     }
 
 
+    public function queryAssoc(string $sql, array $data = [])
+    {
+        $sth = $this->dbh->prepare($sql);
+        try{
+            $sth->execute($data);
+        }catch (\PDOException $exc){
+            throw new BaseException('Ошибка запроса к базе данных',1, $exc);
+        }
+        return $sth->fetchAll(\PDO::FETCH_ASSOC );
+    }
+
+
     public function exec($sql, $data = [])
     {
         $sth = $this->dbh->prepare($sql);

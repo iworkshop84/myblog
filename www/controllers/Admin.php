@@ -213,12 +213,29 @@ class Admin
     public function actionUsers()
     {
         $users =  new Users();
-        $ulist = $users->ordGetAllUsers('userrools.roolsname');
+        $ulist = $users->ordGetAllUsers('userrools.id');
 
-        var_dump($ulist);
+       //var_dump($ulist);
 
         $this->view->assign('users', $ulist);
         $this->view->display('admin/users.php');
     }
+
+    public function actionUser()
+    {
+        if(!empty($_POST)){
+            var_dump($_POST);
+        }
+
+        $users =  new Users();
+        $user = $users->getOneByColumn('id', $_GET['value']);
+        $userRools = $users->getAllURools();
+
+        $this->view->assign('user', $user);
+        $this->view->assign('userrools', $userRools);
+//        var_dump($this);
+        $this->view->display('admin/user.php');
+    }
+
 
 }

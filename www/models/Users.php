@@ -7,6 +7,8 @@ namespace App\Models;
 use App\Classes\DBpdo;
 use App\Models\User;
 
+
+
 class Users extends AbstractModel
 {
     protected $data = [];
@@ -39,16 +41,32 @@ class Users extends AbstractModel
         return $this;
     }
 
+
+
+
     public function ordGetAllUsers(string $column = 'id', string $order = 'ASC')
     {
         $db = new DBpdo();
         $db->setClassName(User::class);
-        $sql = 'SELECT * FROM users, userrools WHERE users.userrools = userrools.id ORDER BY '. $column .' '.
-            static::checkAllowed($order, static::$allowedSort);
+//        $sql = 'SELECT * FROM users, userrools WHERE users.userrools = userrools.id ORDER BY '. $column .' '.
+//        $sql = 'SELECT *, userrools.id AS roolsid FROM users, userrools WHERE users.userrools =.'.$column.' ORDER BY users.userrools ASC';
+        $sql = 'SELECT users.id, users.login, users.email, users.regtime, userrools.roolsname, users.userrools AS roolsid FROM users, userrools WHERE users.userrools = '.$column.' ORDER BY '.$column.' ASC';
         $res = $db->query($sql);
+        //var_dump($res);
         $this->data = $res;
         return $this;
     }
+
+    public function getAllURools()
+    {
+        $db = new DBpdo();
+        //$db->setClassName(UserRools::class);
+        $sql = 'SELECT id, roolsname FROM userrools';
+        $res = $db->queryAssoc($sql);
+        return $res;
+        //return $this;
+    }
+
 
     public static function update(Users $obj)
     {
