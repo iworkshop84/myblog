@@ -11,6 +11,7 @@ use App\Models\Articles;
 use App\Models\Article;
 use App\Models\Users;
 use App\Models\User;
+use App\Classes\Mailer;
 
 class Admin
 {
@@ -173,6 +174,14 @@ class Admin
                                 $newUser->password = password_hash($_POST['password'], PASSWORD_DEFAULT);
                                 $newUser->userrools = 4;
                                 $newUser->regtime = date('Y-m-d G:i:s', time());
+                                $newUser->mailtoken = $newUser->genHashToken();
+
+
+                                $sendMail = new Mailer();
+                                $sendMail->sendToken($newUser);
+
+//                                var_dump($newUser->getData());
+                                exit;
 //
                                 $res = Users::insert($newUser);
                                 if($res){

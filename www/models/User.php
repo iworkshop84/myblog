@@ -10,9 +10,16 @@ namespace App\Models;
  * @property string     $email
  * @property integer    $regtime
  * @property integer    $logtime
+ * @property string     $mailtoken
+ * @property integer    $mailvertify
  */
 
 class User extends AbsSingleModel
 {
 
+
+    public function genHashToken() : string
+    {
+        return bin2hex(openssl_random_pseudo_bytes(16));
+    }
 }
