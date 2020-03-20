@@ -13,6 +13,7 @@ use App\Models\Users;
 use App\Models\User;
 use App\Classes\Mailer;
 
+
 class Admin
 {
 
@@ -111,6 +112,13 @@ class Admin
 
     public function actionLogin()
     {
+        if(Auth::sesLogged()){
+            //echo 'test'; die;
+            header('Location: http://'. $_SERVER['HTTP_HOST'] .'/admin/main');
+            exit;
+        }
+
+
         if(!empty($_POST)){
             if(('' !== $_POST['login']) && ('' !== $_POST['password'])) {
 
@@ -119,34 +127,50 @@ class Admin
                 if (null == $res) {
                     $this->view->assign('error', 'Нет такого пользователя');
                 } else {
-                       if ($user->vertify($_POST['password'], $res)) {
 
-                            $token = Users::genHashToken();
-                            $logHash = password_hash($res->getData()->login, PASSWORD_DEFAULT);
+                        if(1 == $user->getData()->mailvertify ){
+
+                            if ($user->vertify($_POST['password'], $res)) {
+
+                                $token = Users::genHashToken();
+                                $logHash = password_hash($res->getData()->login, PASSWORD_DEFAULT);
 //                            $idHash = password_hash($res->getData()->id, PASSWORD_DEFAULT);
 
-                            $res->getData()->hashtoken = $token . $logHash;
-                            $res->getData()->logtime = date('Y-m-d G-i-s',time());
+                                $res->getData()->hashtoken = $token . $logHash;
+                                $res->getData()->logtime = date('Y-m-d G-i-s',time());
 
-                            Users::update($user);
-                            session_start();
-                            $_SESSION['id'] = $res->getData()->id;
-                            $_SESSION['login'] =$res->getData()->login;
-                            $_SESSION['rools'] = $res->getData()->userrools;
-                            $_SESSION['hash'] = $token;
+                                Users::update($user);
+                                session_start();
+                                $_SESSION['id'] = $res->getData()->id;
+                                $_SESSION['login'] =$res->getData()->login;
+                                $_SESSION['rools'] = $res->getData()->userrools;
+                                $_SESSION['hash'] = $token;
 
-                            //В куку пишется контакенация токена(который отправляется в Сессю) и хешированного ID пользователя
-                            // В БД у нас отправляется контакенация токена и хешированного логина
-                            if(isset($_POST['remember'])){
-                                setcookie('remember', $token . '$2y$' . $res->getData()->id, time() + 86400 * 30, '/');
-                                setcookie('vf', $logHash, time() + 86400 * 30, '/');
+                                //В куку пишется контакенация токена(который отправляется в Сессию) и хешированного ID пользователя
+                                // В БД у нас отправляется контакенация токена и хешированного логина
+                                if(isset($_POST['remember'])){
+                                    setcookie('remember', $token . '$2y$' . $res->getData()->id, time() + 86400 * 30, '/');
+                                    setcookie('vf', $logHash, time() + 86400 * 30, '/');
+                                }
+
+//                            echo 11111;die;
+                                header('Location: http://'.$_SERVER['HTTP_HOST'].'/admin/main/');
+                                exit;
+                            } else {
+                                $this->view->assign('error', 'Не правльный логин или пароль');
                             }
 
-                            header('Location: http://'.$_SERVER['HTTP_HOST'].'/admin/main');
-                            exit;
-                        } else {
-                            $this->view->assign('error', 'Не правльный логин или пароль');
+
+                        }else{
+                            $this->view->assign('error', 'Вы должны активировать почту');
                         }
+
+
+
+
+
+
+
                 }
             }
         }
@@ -180,9 +204,10 @@ class Admin
                                 $sendMail = new Mailer();
                                 $sendMail->sendToken($newUser);
 
+
 //                                var_dump($newUser->getData());
-                                exit;
-//
+//                                exit;
+
                                 $res = Users::insert($newUser);
                                 if($res){
                                     header('Location: /admin/login');
@@ -275,6 +300,8 @@ class Admin
 //        var_dump($this);
         $this->view->display('admin/user.php');
     }
+
+
 
 
 }

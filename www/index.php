@@ -10,7 +10,6 @@ use \App\Classes\View;
 use \App\Classes\Auth;
 
 use PHPMailer\PHPMailer\PHPMailer;
-
 use PHPMailer\PHPMailer\Exception;
 
 /*
@@ -42,6 +41,7 @@ try {
 
 exit;
 */
+
 
 
 try {

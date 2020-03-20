@@ -2,10 +2,10 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Админка - Авторизация</title>
+    <title>Подтверждение почты</title>
 </head>
 <body>
-<h1>Админка - Авторизация</h1>
+<h1>Подтверждение почты</h1>
 <p><a href="/" title="Главная">Главная</a> |
     <?php if(isset($_SESSION['id'])){ ?>
         <a href="/admin/main/" title="Главная">Админка</a> |
@@ -18,18 +18,6 @@
     <?php } ?>
 </p>
 
-<form action="/admin/login/" title="add" name="test" method="post">
-    <p><input name="login" type="text" placeholder="Ваш логин"></p>
-    <p><input name="password" type="password" placeholder="Ваш пароль"></p>
-    <p>Запомнить меня: <input type="checkbox" name="remember"></p>
-
-    <button type="submit">Войти</button>
-</form>
-
-<?php
-
-echo ($this->getData()['error']??'');
-?>
-
+<?= ($this->getData()['msg']??''); ?>. Теперь вы можете авторизироваться на сайте.
 </body>
 </html>

@@ -4,7 +4,7 @@
 namespace App\Classes;
 
 use App\Models\Users;
-use App\Models\User;
+//use App\Models\User;
 
 class Auth
 {
@@ -95,8 +95,5 @@ class Auth
             }
         }
     }
-
-
-
 
 }

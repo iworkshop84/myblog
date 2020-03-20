@@ -42,8 +42,6 @@ class Users extends AbstractModel
     }
 
 
-
-
     public function ordGetAllUsers(string $column = 'id', string $order = 'ASC')
     {
         $db = new DBpdo();
