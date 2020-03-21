@@ -52,7 +52,11 @@ class Admin
                 $article = new Article();
                 $article->title = $_POST['title'];
                 $article->text = $_POST['text'];
+                $article->autor = $_SESSION['id'];
 
+//                var_dump($_SESSION);
+//                var_dump($article);
+//                die;
                 $id = Articles::save($article);
                 header('Location: /admin/edit/' . $id);
                 exit;

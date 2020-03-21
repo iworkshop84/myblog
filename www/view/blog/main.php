@@ -26,5 +26,18 @@ foreach ($this->getData('articles')->getData() as $article): ?>
     <p><?= $article->text; ?></p>
 
 <?php endforeach; ?>
+
+<?php
+//var_dump($this);
+
+
+for($i = 1; $i <= $this->getData('pagin')->numPages; $i++) {
+    echo '<a href="/article/main?page='. $i . '">'.$i."</a>\n";
+}
+
+
+?>
+
+
 </body>
 </html>

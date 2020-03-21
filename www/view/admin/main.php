@@ -26,5 +26,8 @@ foreach ($this->getData('articles')->getData() as $article): ?>
 
 
 <?php endforeach; ?>
+
+
+
 </body>
 </html>

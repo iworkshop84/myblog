@@ -9,39 +9,6 @@ use \App\Classes\Router;
 use \App\Classes\View;
 use \App\Classes\Auth;
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-/*
-try {
-    $mail = new PHPMailer(true);
-
-
-    $mail->CharSet = "UTF-8";
-
-
-
-// Получатель письма
-    $mail->setFrom('admin@example.com', 'Mailer');
-    $mail->addAddress('iworkshop@ya.ru');
-//    $mail->addReplyTo('iworkshop@ya.ru', 'Information');
-
-// Content
-    $mail->isHTML(true);                                 // Set email format to HTML
-    $mail->Subject = 'Тут будет тема письма';
-    $mail->Body = 'Это тело письма и тут будут <b>html</b> теги';
-    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-    $mail->send();
-    echo 'Message has been sent';
-}catch (Exception $e){
-    var_dump($e);
-}
-
-
-exit;
-*/
-
 
 
 try {

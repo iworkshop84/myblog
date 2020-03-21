@@ -45,5 +45,13 @@ abstract class AbstractModel
         return $res;
     }
 
+    public function getCount()
+    {
+        $db = new DBpdo();
+        $sql = 'SELECT COUNT(*) FROM '. static::$table;
+        $res = $db->queryAssoc($sql);
+        return $res[0]['COUNT(*)'];
+    }
+
 
 }

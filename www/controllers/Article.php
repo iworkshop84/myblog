@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Models\Articles;
 use App\Classes\View;
 use App\Classes\BaseException;
+use App\Classes\Paginathion;
 
 
 class Article
@@ -18,10 +19,31 @@ class Article
     public function actionMain()
     {
         $news = new Articles();
-        $news->ordGetAll('posttime','DESC');
+
+            $count = $news->getCount();
+
+            $pagin = new Paginathion();
+            $pagin->setCount($news->getCount())->setNumPage();
+
+            if (isset($_GET['page'])  && ('' !== $_GET['page'])) {
+                $page = ($_GET['page'] -1);
+            }else{
+                $page = 0;
+            }
+
+            $start= abs($page);
+
+            $news->ordGetAllArt('posttime','DESC', $start * $pagin->perPage, $pagin->perPage);
+            $this->view->assign('pagin', $pagin);
+
+
+
         if(empty($news)){
             throw new BaseException('Ничего не найдено',2);
         }
+
+
+
 
         $this->view->assign('articles', $news);
         $this->view->display('blog/main.php');

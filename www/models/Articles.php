@@ -24,6 +24,25 @@ class Articles extends AbstractModel
         return $this;
     }
 
+    public function ordGetAllArt(string $column = 'id', string $order = 'ASC', int $limitStart = null, int $limitEnd = null)
+    {
+        $db = new DBpdo();
+        $db->setClassName(Article::class);
+        if(isset($limitStart) && isset($limitEnd)){
+            $sql = 'SELECT * FROM '. static::$table .' ORDER BY '. $column .' '.
+                static::checkAllowed($order, static::$allowedSort). ' LIMIT '. $limitStart .','.$limitEnd;
+//            var_dump($sql);die;
+
+        }else{
+            $sql = 'SELECT * FROM '. static::$table .' ORDER BY '. $column .' '.
+                static::checkAllowed($order, static::$allowedSort);
+        }
+
+        $res = $db->query($sql);
+        $this->data = $res;
+        return $this;
+    }
+
     public function getOneByColumn($column, $value) :?object
     {
         $db = new DBpdo();
@@ -115,5 +134,7 @@ class Articles extends AbstractModel
         $db = new DBpdo();
         return $db->exec($sql, $dataIns);
     }
+
+
 
 }
