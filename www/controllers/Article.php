@@ -20,10 +20,11 @@ class Article
     {
         $news = new Articles();
 
-            $count = $news->getCount();
+//            $count = $news->getCount();
 
             $pagin = new Paginathion();
             $pagin->setCount($news->getCount())->setNumPage();
+//            var_dump($pagin);die;
 
             if (isset($_GET['page'])  && ('' !== $_GET['page'])) {
                 $page = ($_GET['page'] -1);
